@@ -4,7 +4,8 @@
   "description": "An advanced chess-like game with websocket communication",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "node build --output public"
   },
   "dependencies": {
     "advanced-chess-like-game": "file:",
