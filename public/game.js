@@ -5,8 +5,8 @@ let selectedPiece = null;
 
 function initializeGame() {
     document.getElementById('choosePlayer').style.display = 'block';
-    document.getElementById('Aplayer').addEventListener('click', () => selectPlayer('A'));
-    document.getElementById('Bplayer').addEventListener('click', () => selectPlayer('B'));
+    document.getElementById('player-A').addEventListener('click', () => selectPlayer('A'));
+    document.getElementById('player-B').addEventListener('click', () => selectPlayer('B'));
 }
 
 function selectPlayer(player) {
@@ -15,6 +15,7 @@ function selectPlayer(player) {
 }
 
 function renderBoard() {
+    if(!gameState) return;
     const board = document.getElementById('game-board');
     board.innerHTML = '';
     for (let y = 0; y < 5; y++) {
@@ -64,10 +65,10 @@ function showMoveOptions(pieceType) {
 
 function makeMove(direction) {
     const pieces = {
-        'P': { name: 'Pawn', moves: ['F', 'B', 'L', 'R'], range: [1, 1] },
-        'H1': { name: 'Hero1', moves: ['F', 'B', 'L', 'R'], range: [2,2] },
-        'H2': { name: 'Hero2', moves: ['FL', 'FR', 'BL', 'BR'], range: [2,2] },
-        'H3': { name: 'Hero3', moves: ['FL', 'FR', 'BL', 'BR', 'RF', 'RB', 'LF', 'LB'], range: [2,1] }
+        'P': { name: 'Pawn', moves: ['F', 'B', 'L', 'R'], range: 1 },
+        'H1': { name: 'Hero1', moves: ['F', 'B', 'L', 'R'], range: 2 },
+        'H2': { name: 'Hero2', moves: ['FL', 'FR', 'BL', 'BR'], range: 2 },
+        'H3': { name: 'Hero3', moves: ['FL', 'FR', 'BL', 'BR', 'RF', 'RB', 'LF', 'LB'], range: 3 }
     };
     
     
@@ -84,8 +85,8 @@ function makeMove(direction) {
             
             if (pieceInfo.moves.includes(direction)) {
                 const [dx, dy] = directions[direction];
-                const toX = selectedPiece.x + (dx * pieceInfo.range[0]);
-                const toY = selectedPiece.y + (dy * pieceInfo.range[1]);
+                const toX = selectedPiece.x + (dx * pieceInfo.range);
+                const toY = selectedPiece.y + (dy * pieceInfo.range);
                 
                 socket.emit('move', {
                     player: playerAssigned,

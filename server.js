@@ -18,7 +18,7 @@ let gameState = {
 };
 
 const pieces = {
-  'P': { name: 'Pawn', moves: ['F', 'B', 'L', 'R', 'FL', 'FR', 'BL', 'BR'], range: 1 },
+  'P': { name: 'Pawn', moves: ['F', 'B', 'L', 'R'], range: 1 },
   'H1': { name: 'Hero1', moves: ['F', 'B', 'L', 'R'], range: 2 },
   'H2': { name: 'Hero2', moves: ['FL', 'FR', 'BL', 'BR'], range: 2 },
   'H3': { name: 'Hero3', moves: ['FL', 'FR', 'BL', 'BR', 'RF', 'RB', 'LF', 'LB'], range: 2 }
@@ -37,7 +37,9 @@ function initializeGame() {
 }
 
 function isValidMove(player, fromX, fromY, toX, toY) {
+  console.log("here");
   const piece = gameState.board[fromY][fromX];
+  console.log(piece);
   if (!piece || piece[0] !== player) return false;
   
   const [, type] = piece.split('-');
@@ -56,27 +58,31 @@ function isValidMove(player, fromX, fromY, toX, toY) {
   if (gameState.board[toY][toX] && gameState.board[toY][toX][0] === player) return false;
 
   // Determine valid moves based on piece type
-  switch (pieceType) {
-    case 'P': // Pawn moves
-      if ((Math.abs(dx) == 1 && dy==0) || Math.abs(dy) == 1 && (dx==0)) {
+  switch (type) {
+    case 'P1': case 'P2': // Pawn moves
+      console.log(dx," ", dy);
+      if (Math.abs(dx) <= pieceType.range && Math.abs(dy) <= pieceType.range && (Math.abs(dx) + Math.abs(dy) === 1)) {
         return true; // Pawn moves one step in any direction
       }
       break;
 
     case 'H1': // Hero1 moves (2 steps in any cardinal direction)
-      if ((Math.abs(dx) === 2 && dy === 0) || (Math.abs(dy) === 2 && dx === 0)) {
+      console.log(dx," ", dy);
+      if ((Math.abs(dx) === pieceType.range && dy === 0) || (Math.abs(dy) === pieceType.range && dx === 0)) {
         return true; // Moves exactly 2 steps horizontally or vertically
       }
       break;
 
     case 'H2': // Hero2 moves (2 steps diagonally)
-      if (Math.abs(dx) === 2 && Math.abs(dy) === 2) {
+      console.log(dx," ", dy);
+      if (Math.abs(dx) === pieceType.range && Math.abs(dy) === pieceType.range) {
         return true; // Moves exactly 2 steps diagonally
       }
       break;
 
     case 'H3': // Hero3 moves (3 steps in any direction)
-      if ((Math.abs(dx) === 2 && Math.abs(dy) === 1 ) || (Math.abs(dx) === 2 && Math.abs(dy) === 1 ) ){
+      console.log(dx," ", dy);
+      if (Math.abs(dx) === pieceType.range || Math.abs(dy) === pieceType.range) {
         return true; // Moves exactly 3 steps in any direction
       }
       break;
@@ -87,6 +93,7 @@ function isValidMove(player, fromX, fromY, toX, toY) {
 
   return false; // If no valid move found
 }
+
 
 
 function processMove(player, fromX, fromY, toX, toY) {
@@ -130,6 +137,7 @@ io.on('connection', (socket) => {
   });
   
   socket.on('move', ({ player, fromX, fromY, toX, toY }) => {
+    console.log(fromX," ", fromY," ", toX," ", toY);
     if (player === gameState.currentPlayer && isValidMove(player, fromX, fromY, toX, toY)) {
       processMove(player, fromX, fromY, toX, toY);
       io.emit('gameUpdate', gameState);
@@ -162,5 +170,5 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
