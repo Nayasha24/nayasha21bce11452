@@ -1,0 +1,228 @@
+/* Global Styles */
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-image: linear-gradient(to bottom right, #779abd, #e2f0fb); /* Cool gradient effect */
+    color: #01430f; /* Dark text for better readability */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+
+#game-box {
+    text-align: center;
+    max-width: 900px;
+    background-image: linear-gradient(to bottom left, #40316c, #15002e);
+    width: 100%;
+    border-radius: 40px;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    flex: auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #21005a; 
+}
+
+#choosePlayer h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: #d9c6ff; /* Soft teal */
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    grid-gap: 5px;
+    margin: 20px auto;
+    background-color: #002c36; /* Light pastel background for the board */
+    padding: 5px;
+    border-radius: 10px;
+    justify-self: center; /* Center horizontally in a grid container, if applicable */
+    align-self: center;   /* Center vertically in a grid container, if applicable */
+}
+
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: #d0e3e7; /* Soft pastel cells */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cell:hover {
+    background-color: #b0d8e8; /* Slightly darker on hover */
+    color: #000;
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.cell.selected {
+    background-color: #6b9ac4; /* Highlight selected cell */
+    color: #fff;
+}
+
+.piece-A {
+    color: #121756; /* Pastel green for Player A */
+}
+
+.piece-B {
+    color: #541e1e; /* Pastel peach for Player B */
+}
+
+#move-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    color:rgba(222, 197, 197);
+}
+
+#move-buttons button {
+    padding: 10px;
+    background-color: #d0e3e7; /* Light pastel background for buttons */
+    color: #0a1924;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.2em;
+}
+
+#move-buttons button:hover {
+    background-color: #a8d0e6; /* Darker pastel on hover */
+    transform: scale(1.05); /* Slight scale up on hover */
+}
+
+#MoveHist {
+    text-align: center; /* Centers text inside the div */
+    align-self: center; /* Centers the div vertically if the parent has flexbox properties */
+    margin: 0 auto; /* Centers the div horizontally */
+}
+
+
+#MoveHist h3 {
+    color: #cfe2db; /* Soft teal for history title */
+    margin-bottom: 10px;
+}
+
+#history-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#history-list li {
+    background-color: #e0f4f4; /* Very light pastel for history items */
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#history-list li:hover {
+    background-color: #c3e1e8; /* Slightly darker on hover */
+}
+
+#history-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+}
+
+#game-status {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #140328; /* Darker text color for status */
+}
+
+#choosePlayer {
+    margin-bottom: 20px;
+}
+
+#choosePlayer button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #785be0; 
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Cool shadow effect */
+}
+
+
+#choosePlayer button:hover {
+    background-color: #f473a9; 
+    transform: scale(1.05);
+}
+
+#selected-piece {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #eacee8; 
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#game-over-message {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #4b8f77; /* Soft teal for game over message */
+}
+
+#new-game-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #6a9a5b; /* Pastel green button */
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#new-game-button:hover {
+    background-color: #5a8a4b; /* Darker green on hover */
+    transform: scale(1.05); /* Scale up on hover */
+}
